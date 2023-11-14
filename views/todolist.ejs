@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>TODO LIST</title>
+        <link href="/todo.css" rel="stylesheet" type="text/css">
+        <script src="https://kit.fontawesome.com/2dad734a71.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <h1>TODO LIST</h1>
+        <form action="add-task" method="post" id="form1">
+            <table id="table1">
+                <tbody>
+                    <tr class="rows">
+                        <td id="r1c1">
+                            <div class='full-input'><label for='name'>Description <br></label>
+                                <input id="des" type="text" name="description" placeholder="What do you need to do?" required></input>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table id="table2">
+                <tbody>
+                    <tr class="rows">
+                        <td class="r2c1">
+                            <div class='full-input'><label for='category'>Category <br></label>
+                                <select name = "category" id="cat" required>  
+                                    <option> Choose a category </option>  
+                                    <option> Personal </option>  
+                                    <option> Work </option>  
+                                    <option> School </option>  
+                                    <option> Cleaning </option>  
+                                    <option> Other </option>
+                                </select> 
+                            </div>
+                        </td>
+                        <td id="r2c2">
+                            <div class='full-input'><label for="due">Due Date </label>
+                                <input type="date" name="duedate" id="due">
+                            </div>
+                        </td>   
+                    </tr>
+                </tbody>
+            </table>
+            <button id="add" type="submit"><i class="fa-solid fa-check"></i> ADD TASK</button>
+        </form>
+        <form action="/delete-task" method="get" id="form2">
+            <button id="delete" type="submit" class="tooltip">
+                <span class="tooltiptext">Click here to delete the selected tasks</span>
+                <i class="fa-regular fa-trash-can"></i> DELETE</button>
+                <h2 id="space">TASKS</h2>
+                <% for(let i of data){ %>
+                    <table id="table3">
+                        <tbody>
+                                <tr>
+                                    <td id="c1"><input type="checkbox" name="<%=i._id %>" onchange="strikeText(this)"></td>
+                                    <td id="c2">
+                                        <h3><%= i.description %></h3>
+                                        <div><i class="fa-regular fa-calendar"></i>: <%= i.duedate %></div>
+                                    </td>
+                                    <td id="c3"><div id="divc3"><%= i.category %></div></td>
+                                </tr>
+                        </tbody> 
+                    </table>
+                <%} %>
+        </form>
+        <script>
+            function strikeText(checkbox){
+                var row = checkbox.parentNode.parentNode.parentNode.parentNode;
+                var text1 =row.getElementsByTagName("td")[1];
+                var text2=row.getElementsByTagName("td")[2];
+                if (checkbox.checked) {
+                    text1.style.textDecoration = "line-through";
+                    text2.style.textDecoration = "line-through";
+                    console.log("TASK FINISHED SUCCESFULLY");
+                } else {
+                    text1.style.textDecoration = "none";
+                    text2.style.textDecoration = "none";
+                }
+            }
+        </script>
+    </body>
+</html>
